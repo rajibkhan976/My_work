@@ -1,0 +1,125 @@
+@using Bluegarden.HRPlus.Common
+@using Bluegarden.HRPlus.ServiceLayer.DTO
+@using Bluegarden.HRPlus.Web.AppCode
+@using Bluegarden.HRPlus.Web.AppCode.HtmlHelpers
+@using Bluegarden.HRPlus.Web.Models.Common
+@model Bluegarden.HRPlus.Web.Areas.Employment.Models.ListModel<EmployeeFileListRowDTO>
+
+@{
+    ViewBag.Title = ViewBag.MyEmployments != true ?
+                        Html.GetTranslation(LocalizationKeys.Common.Menu.EmploymentFiles) :
+                        Html.GetTranslation(LocalizationKeys.Common.Menu.MyEmploymentFiles);
+
+    var grid = new HrPlusWebGrid<EmployeeFileListRowDTO>(null, rowsPerPage: Model.PageSize, htmlHelper: Html);
+    grid.Bind((EmployeeFileListRowDTO[])ViewBag.Data, autoSortAndPage: false, rowCount: (int)ViewBag.TotalCount);
+
+    ViewBag.HelpModel = new IButtonPopupModel
+    {
+        Title = LocalizationKeys.IButton.EmploymentAdministrationFilesTitle,
+        HelpText = LocalizationKeys.IButton.EmploymentAdministrationFilesHelpText
+    };
+}
+
+@using (Html.BeginAntiForgeryForm())
+{
+    <div class="content">
+        <div class="grid-row no-margin">
+            <div class="grid-column-12">
+                <h1>@ViewBag.Title</h1>
+            </div>
+        </div>
+        @if (ViewBag.MyEmployments != true)
+        {
+            if (!ViewData.ModelState.IsValid)
+            {
+                @Html.ValidationSummary()
+            }
+
+            <div class="grid-row no-margin">
+                <div class="grid-column-12 is-hidden" id="AdvancedQueryHolder">
+                    @Html.Action("Query", "AdvancedQuery", new { area = "Common", dtoName = Model.Filter.GetType().Name, queryId = ViewBag.AdvancedQueryId })
+                </div>
+            </div>
+        }
+        <div class="grid-row no-margin">
+            <div class="grid-column-12">
+                @if (ViewBag.MyEmployments != true)
+                {
+                    <div class="button-group">
+                        <button type="submit"
+                                data-search="@Html.GetTranslation(LocalizationKeys.Common.Search)"
+                                data-cancel="@Html.GetTranslation(LocalizationKeys.Common.Cancel)"
+                                data-unsaved-query-rows-details="@Html.GetTranslation(LocalizationKeys.AdvancedQuery.UnsavedRowsWarningDetails)"
+                                data-unsaved-query-rows-title="@Html.GetTranslation(LocalizationKeys.AdvancedQuery.UnsavedRowsWarningTitle)"
+                                class="button is-primary is-small-width"
+                                id="employment-search">
+                            @Html.GetTranslation(LocalizationKeys.Common.Search)
+                        </button>
+                        <button type="reset" class="button is-hidden is-small-width">@Html.GetTranslation(LocalizationKeys.Common.Clear)</button>
+                    </div>
+                    @Html.Action("GetCreateCaseButtons", "Employment", new { area = "Employment" })
+                    <div class="button-group pull-right left-margin">
+                    <a class="button toggle-view is-primary is-active">
+                        <i class="fa fa-list" onClick="setCardView(false)" aria-hidden="true"></i> Lista
+                    </a>
+                    <a class="button toggle-view is-primary" onClick="setCardView(true)">
+                        <i class="fa fa-th" aria-hidden="true"></i> Kort
+                    </a>
+                    </div>
+                        }
+                        <dl class="dl-horizontal pull-right" style="margin-top: 7px">
+                            <dt>
+                                @Html.LocalizedLabelFor(m => m.PageSize)
+                            </dt>
+                            <dd>
+                                @Html.DropDownListFor(m => m.PageSize, Utilities.RowsPerPageList, new { @class = "is-small" })
+                            </dd>
+                            @if (ViewBag.MyEmployments != true)
+                            {
+                                <dt>
+                                    @Html.LocalizedLabelFor(m => m.ShowEndedEmployments)
+                                </dt>
+                                <dd>
+                                    @Html.CheckBoxFor(m => m.ShowEndedEmployments)
+                                </dd>
+                            }
+                        </dl>
+                </div>
+        </div>
+        <hr />
+        <div class="grid-row no-margin">
+            <div class="grid-column-12">
+                <div class="datatable is-clickable" data-fixedcolumns="1">
+                    <div class="datatable-inner">
+                        @grid.GetHtmlEx(grid.Columns(ViewBag.Columns), "datatable-table fixed", "datatable-headers is-clickable", filterData: Model.Filter, filterPrefix: "Filter")
+                    </div>
+                    <div class="text-right" role="navigation">
+                        <span>@Html.GetTranslation(LocalizationKeys.Common.Total): @ViewBag.TotalCount</span>
+                        @ViewBag.Pager
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setCardView(cardViewValue) {
+            if (cardViewValue != false) {
+                document.cookie = "showCardView=" + cardViewValue + ";expires=01 Jan 2030 00:00:00";
+                var redirectLocation = window.location.href.split("?")[0];
+                window.location.href = redirectLocation;
+            }
+        }
+    </script>
+}
+
+@section head
+{
+    @Styles.Render("~/bundles/employment/list/css")
+}
+
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/NextGen/pages/EmploymentList/js")
+}

@@ -1,0 +1,237 @@
+.employment-main {
+    margin: 1.5em 0;
+    background-color: #ffffff;
+    box-shadow: 0 0 0.5em #d7d7d7;
+
+    .employment-body {
+        width: 100%;
+        min-height: 100px;
+        display: grid;
+        display: -ms-grid;
+        grid-template-columns: 15% 25% 25% 25% 10%;
+        -ms-grid-columns: 15% 25% 25% 25% 10%;
+        grid-template-rows: auto;
+        -ms-grid-rows: auto;
+        overflow-wrap: break-word;
+
+        .employee-image {
+            grid-column: 1/2;
+            -ms-grid-column: 1;
+            margin: 1em auto;
+            text-align: center;
+
+            img.employee-base-image {
+                width: 70px;
+                height: 70px;
+            }
+
+            .employee-image-icon {
+                line-height: 70px;
+                font-size: 4.5em;
+                width: 70px;
+                height: 70px;
+                border-radius: 50%;
+                background-color: #d7d7d7;
+                color: white;
+            }
+        }
+
+        .employee-name-and-designation {
+            grid-column: 2/3;
+            -ms-grid-column: 2;
+            margin: 1em;
+
+            .employee-name {
+                display: block;
+
+                a {
+                    font-size: 1.3em;
+                    font-weight: bold;
+                    color: #0974b3;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+            }
+
+            .employee-designation {
+                display: block;
+                font-size: 1.2em;
+            }
+        }
+
+        .employee-email {
+            grid-column: 3/4;
+            -ms-grid-column: 3;
+            margin: auto 1.1em;
+            font-size: 1.2em;
+            font-weight: 700;
+
+            > i {
+                font-size: 20px;
+            }
+        }
+
+        .employee-phone {
+            grid-column: 4/5;
+            -ms-grid-column: 4;
+            margin: auto 1.1em;
+            font-size: 1.2em;
+            font-weight: 700;
+
+            > i {
+                font-size: 20px;
+            }
+        }
+
+        .employee-action {
+            grid-column: 5/6;
+            -ms-grid-column: 5;
+            margin: auto;
+            font-size: 18px;
+            color: #0974b3;
+        }
+
+        .employee-action:hover {
+            cursor: pointer;
+        }
+
+        @media only screen and (max-width: 750px) {
+            /* For mobile phones: */
+            [class*="employee-"] {
+                grid-column: 1/2;
+                -ms-grid-column: 1;
+                margin-top: 1.2%;
+                text-align: center;
+            }
+        }
+    }
+
+    .employment-expanded {
+        width: 100%;
+        min-height: 300px;
+        display: grid;
+        display: -ms-grid;
+        grid-template-columns: 70% 30%;
+        -ms-grid-columns: 70% 30%;
+        grid-template-rows: auto;
+        -ms-grid-rows: auto;
+        border-top: 1px solid #d7d7d7;
+
+        .employment-expanded-left {
+            grid-column: 1/2;
+            -ms-grid-column: 1;
+            border-right: 1px solid #d7d7d7;
+            padding: 3%;
+
+            .casebuttons-sec-title {
+                width: 95%;
+                font-size: 1.857em;
+                border-bottom: 1px solid #bdbdbd;
+            }
+
+            .case-buttons {
+                width: 100%;
+                display: grid;
+                display: -ms-grid;
+                grid-template-columns: 33% 33% 33%;
+                -ms-grid-columns: 33% 33% 33%;
+                grid-template-rows: auto;
+                -ms-grid-rows: auto;
+
+                .left-column {
+                    grid-column: 1/2;
+                    -ms-grid-column: 1;
+                }
+
+                .middle-column {
+                    grid-column: 2/3;
+                    -ms-grid-column: 2;
+                }
+
+                .right-column {
+                    grid-column: 3/4;
+                    -ms-grid-column: 3;
+                }
+
+                .button-card-view {
+                    width: 95%;
+                }
+
+                @media only screen and (max-width: 1310px) {
+                    /* For mobile phones: */
+                    [class*="-column"] {
+                        grid-column: 1/4;
+                    }
+
+                    .button-card-view {
+                        width: 65%;
+                    }
+                }
+            }
+        }
+
+        .employment-expanded-right {
+            grid-column: 2/3;
+            -ms-grid-column: 2;
+            padding-left: 5%;
+
+            .employment-card-sec-title {
+                width: 95%;
+                margin-top: 8%;
+                font-size: 1.857em;
+                border-bottom: 1px solid #bdbdbd;
+            }
+
+            @media only screen and (max-width: 750px) {
+                /* For mobile phones: */
+                .employment-card-sec-title {
+                    margin-top: 0;
+                }
+            }
+        }
+
+        @media only screen and (max-width: 750px) {
+            /* For mobile phones: */
+            [class*="employment-expanded-"] {
+                grid-column: 1/2;
+                -ms-grid-column: 1;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 750px) {
+        /* For mobile phones: */
+        .employment-body {
+            width: 100%;
+            min-height: 100px;
+            display: grid;
+            display: -ms-grid;
+            grid-template-columns: 100%;
+            -ms-grid-columns: 100%;
+            grid-template-rows: auto;
+            -ms-grid-rows: auto;
+        }
+
+        .employment-expanded {
+            width: 100%;
+            min-height: 300px;
+            display: grid;
+            display: -ms-grid;
+            grid-template-columns: 100%;
+            -ms-grid-columns: 100%;
+            grid-template-rows: auto;
+            -ms-grid-rows: auto;
+        }
+    }
+}
+
+.list-component-container {
+    margin: 1.5em 0;
+    background-color: #ffffff;
+}
+
+.employment-card-container {/*
+    margin-top: 2em;
+    margin-bottom: 2em;
+    */
+}

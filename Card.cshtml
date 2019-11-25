@@ -1,0 +1,61 @@
+@using Bluegarden.HRPlus.Common
+@using Bluegarden.HRPlus.Web.Models.Common
+
+@{
+    Layout = "~/Views/NextGen/Shared/_ReactLayout.cshtml";
+
+    ViewBag.Title = Html.GetTranslation(LocalizationKeys.Common.Menu.Employment);
+
+    ViewBag.UseNordicCool = true;
+
+    ViewBag.ReactHookId = "employment-card";
+
+    ViewBag.HelpModel = new IButtonPopupModel
+    {
+        Title = LocalizationKeys.IButton.EmploymentAdministrationFilesTitle,
+        HelpText = LocalizationKeys.IButton.EmploymentAdministrationFilesHelpText
+    };
+}
+
+@using (Html.BeginAntiForgeryForm())
+{
+    <div class="grid-row no-margin">
+        <div class="grid-column-12">
+            <h1>@ViewBag.Title</h1>
+        </div>
+        <div>
+            @Html.Action("GetCreateCaseButtons", "Employment", new { area = "Employment", hide = false })
+            <div class="button-group pull-right left-margin">
+                <a class="button toggle-view is-primary" onClick="setCardView(false)">
+                    <i class="fa fa-list" aria-hidden="true"></i> Lista
+                </a>
+                <a class="button toggle-view is-primary is-active">
+                    <i class="fa fa-th" aria-hidden="true"></i> Kort
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setCardView(cardViewValue) {
+            if (cardViewValue != true) {
+                document.cookie = "showCardView=" + cardViewValue + ";expires=01 Jan 2030 00:00:00";
+                var redirectLocation = window.location.href.split("?")[0];
+                window.location.href = redirectLocation;
+            }
+        }
+        $("#employment-card").appendTo(".content");
+    </script>
+}
+
+@section head
+{
+    @Styles.Render("~/bundles/employment/list/css")
+    @Styles.Render("~/Content/css/select2.css")
+}
+
+@section scripts
+{
+    @Scripts.Render("~/Scripts/NextGen/pages/EmploymentList/js")
+}
+
