@@ -1,46 +1,44 @@
-import initialState from "../initialState";
+import initalState from "../initialState";
 import * as Types from "../../Actions/Employment/actionTypes";
 
-export default function employmentCardReducer(state = initialState.employment, action) {
-    return {
-        employmentCards: employmentCards(state.employmentCards, action),
-        salary: salaryDetails(state.salary, action),
-        salaryAffecting: salaryAffecting(state.salaryAffecting, action),
-        caseButtons: caseButtons(state.caseButtons, action)
-    };
-}
+export default (state = initalState.employment, action) => employmentReducer(state, action);
 
-function employmentCards(state, action) {
+function employmentReducer(state, action) {
     switch (action.type) {
-        case Types.GET_EMPLOYMENTS_SUCCESS:
-            return action.data;
-        default:
-            return state;
-    }
-}
+        case Types.LOAD_EMPLOYMENTS_SUCCESS: {
+            return { ...state, employments: action.data.result };
+        }
 
-function caseButtons(state, action) {
-    switch (action.type) {
-        case Types.GET_CASEBUTTONS_SUCCESS:
-            return action.data;
-        default:
-            return state;
-    }
-}
+        case Types.LOAD_EMPLOYMENTINFO_SUCCESS: {
+            return { ...state, cardInfo: action.data };
+        }
 
-function salaryDetails(state, action) {
-    switch (action.type) {
-        case Types.GET_SALARY_SUCCESS:
-            return action.data;
-        default:
-            return state;
-    }
-}
+        case Types.RESET_FILTER_EMPLOYMENTS: {
+            return { ...state, noResult: false, filteredEmployments: [] };
+        }
 
-function salaryAffecting(state, action) {
-    switch (action.type) {
-        case Types.GET_SALARY_AFFECTING_SUCCESS:
-            return action.data;
+        case Types.FILTER_EMPLOYMENTS: {
+            const { payload } = action
+            const filterArray = (array, query) => array.filter(o =>
+                Object.keys(o).some(k => String(o[k]).toLowerCase().includes(query.toLowerCase())));
+
+            const filteredEmployments = filterArray(state.employments, payload);
+
+            if (filteredEmployments.length === 0) {
+                return { ...state, noResult: true, filteredEmployments }
+            }
+
+            return { ...state, filteredEmployments };
+        }
+
+        case Types.LOAD_CASEBUTTONS_SUCCESS: {
+            return { ...state, caseButtons: action.data.caseButtons };
+        }
+
+        case Types.LOAD_SALARY_INFO_SUCCESS: {
+            return { ...state, salaryInfo: action.data };
+        }
+
         default:
             return state;
     }

@@ -59,32 +59,32 @@
                     </div>
                     @Html.Action("GetCreateCaseButtons", "Employment", new { area = "Employment" })
                     <div class="button-group pull-right left-margin">
-                    <a class="button toggle-view is-primary is-active">
-                        <i class="fa fa-list" onClick="setCardView(false)" aria-hidden="true"></i> Lista
-                    </a>
-                    <a class="button toggle-view is-primary" onClick="setCardView(true)">
-                        <i class="fa fa-th" aria-hidden="true"></i> Kort
-                    </a>
+                        <a class="button" disabled>
+                            <i class="fa fa-list" aria-hidden="true"></i> @Html.GetTranslation(LocalizationKeys.Employment.EmploymentCard.LabelTwo)
+                        </a>
+                        <a class="button" id="custom-toggle">
+                            <i class="fa fa-th" aria-hidden="true"></i> @Html.GetTranslation(LocalizationKeys.Employment.EmploymentCard.LabelThree)
+                        </a>
                     </div>
-                        }
-                        <dl class="dl-horizontal pull-right" style="margin-top: 7px">
-                            <dt>
-                                @Html.LocalizedLabelFor(m => m.PageSize)
-                            </dt>
-                            <dd>
-                                @Html.DropDownListFor(m => m.PageSize, Utilities.RowsPerPageList, new { @class = "is-small" })
-                            </dd>
-                            @if (ViewBag.MyEmployments != true)
-                            {
-                                <dt>
-                                    @Html.LocalizedLabelFor(m => m.ShowEndedEmployments)
-                                </dt>
-                                <dd>
-                                    @Html.CheckBoxFor(m => m.ShowEndedEmployments)
-                                </dd>
-                            }
-                        </dl>
-                </div>
+                }
+                <dl class="dl-horizontal pull-right" style="margin-top: 7px">
+                    <dt>
+                        @Html.LocalizedLabelFor(m => m.PageSize)
+                    </dt>
+                    <dd>
+                        @Html.DropDownListFor(m => m.PageSize, Utilities.RowsPerPageList, new { @class = "is-small" })
+                    </dd>
+                    @if (ViewBag.MyEmployments != true)
+                    {
+                        <dt>
+                            @Html.LocalizedLabelFor(m => m.ShowEndedEmployments)
+                        </dt>
+                        <dd>
+                            @Html.CheckBoxFor(m => m.ShowEndedEmployments)
+                        </dd>
+                    }
+                </dl>
+            </div>
         </div>
         <hr />
         <div class="grid-row no-margin">
@@ -101,16 +101,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function setCardView(cardViewValue) {
-            if (cardViewValue != false) {
-                document.cookie = "showCardView=" + cardViewValue + ";expires=01 Jan 2030 00:00:00";
-                var redirectLocation = window.location.href.split("?")[0];
-                window.location.href = redirectLocation;
-            }
-        }
-    </script>
 }
 
 @section head

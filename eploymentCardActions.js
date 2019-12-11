@@ -1,18 +1,32 @@
-import * as Types from "./actionTypes";
 import * as Api from "../../Api/Employment/employmentCardApi";
+import * as Types from "./actionTypes";
 
-export function getEmploymentCards() {
-    return function (dispatch) {
-        return Api.getEmployments()
+const loadEmploymentList = data => {
+    return { type: Types.LOAD_EMPLOYMENTS_SUCCESS, data };
+};
+
+const loadSalaryInfo = data => {
+    return { type: Types.LOAD_SALARY_INFO_SUCCESS, data };
+};
+
+const loadCaseButtons = data => {
+    return { type: Types.LOAD_CASEBUTTONS_SUCCESS, data };
+};
+
+export function getEmployments(showEndedEmployments, filterQuery) {
+    return function(dispatch) {
+        window.loader.show();
+        return Api.getEmployments(showEndedEmployments)
             .then(result => {
-                return dispatch({
-                    type: Types.GET_EMPLOYMENTS_SUCCESS,
-                    data: result.data.result
-                });
+                window.loader.hide();
+                dispatch(loadEmploymentList(result.data));
+                if (filterQuery) {
+                    dispatch(filterEmployments(filterQuery));
+                }
             })
             .catch(error => {
-                return dispatch({
-                    type: Types.GET_EMPLOYMENTS_FAILED,
+                dispatch({
+                    type: Types.LOAD_EMPLOYMENTS_FAILED,
                     data: `Fetching employments failed: ${error}`
                 });
             });
@@ -20,55 +34,50 @@ export function getEmploymentCards() {
 }
 
 export function getCaseButtons(employmentId, fullName) {
-    return function (dispatch) {
+    return function(dispatch) {
         return Api.getCaseButtonsForEmployment(employmentId, fullName)
             .then(result => {
-                return dispatch({
-                    type: Types.GET_CASEBUTTONS_SUCCESS,
-                    data: result.data.caseButtons
-                });
+                dispatch(loadCaseButtons(result.data));
             })
             .catch(error => {
                 return dispatch({
-                    type: Types.GET_CASEBUTTONS_FAILED,
+                    type: Types.LOAD_CASEBUTTONS_FAILED,
                     data: `Fetching case buttons failed: ${error}`
                 });
             });
-    }
+    };
 }
 
-export function getSalary(employmentId) {
-    return function (dispatch) {
-        return Api.getSalary(employmentId)
+export function getSalaryInfo(employmentId) {
+    return function(dispatch) {
+        return Api.getSalaryInfoForEmployee(employmentId)
             .then(result => {
-                return dispatch({
-                    type: Types.GET_SALARY_SUCCESS,
-                    data: result.data
-                });
+                dispatch(loadSalaryInfo(result.data));
             })
             .catch(error => {
                 return dispatch({
-                    type: Types.GET_SALARY_FAILED,
-                    data: `Fetching salary failed: ${error}`
+                    type: Types.LOAD_SALARY_INFO_FAILED,
+                    data: `Fetching salary info failed: ${error}`
                 });
             });
-    }
+    };
 }
 
-export function getSalaryAffecting(employmentId) {
-    return function (dispatch) {
-        return Api.getSalaryAffecting(employmentId)
-            .then(result => {
-                return dispatch({
-                    type: Types.GET_SALARY_AFFECTING_SUCCESS,
-                    data: result.data
-                });
-            })
-            .catch(error => {
-                return dispatch({
-                    type: Types.GET_SALARY_AFFECTING_FAILED,
-                    data: `Fetching salary affecting failed: ${error}`
-                });
-            });
-    }
+export function filterEmployments(data) {
+    window.loader.show();
+    return function(dispatch) {
+        dispatch({
+            type: Types.FILTER_EMPLOYMENTS,
+            payload: data
+        });
+        window.loader.hide();
+    };
+}
+
+export function resetFilter() {
+    return function(dispatch) {
+        dispatch({
+            type: Types.RESET_FILTER_EMPLOYMENTS
+        });
+    };
 }

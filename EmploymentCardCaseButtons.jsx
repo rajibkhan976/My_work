@@ -1,13 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
 import translate from "redux-polyglot/translate";
 import * as caseTypes from "./const";
-import * as employmentCardActions from "../../Actions/Employment/employmentCardActions";
 
 class EmploymentCardCaseButtons extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -29,15 +24,21 @@ class EmploymentCardCaseButtons extends React.Component {
             this.props.caseButtons.map((value, index) => {
                 if (value.caseDefinitionType === 1 && value.isPreProcessUrl) {
                     this.setState({
-                        newEmploymentButtons: this.props.caseButtons.filter((value, index) => { return (value.caseDefinitionType === 1 && value.isPreProcessUrl); })
+                        newEmploymentButtons: this.props.caseButtons.filter((value, index) => {
+                            return value.caseDefinitionType === 1 && value.isPreProcessUrl;
+                        })
                     });
                 } else if (value.caseDefinitionType === 2 && !value.isPreProcessUrl) {
                     this.setState({
-                        editEmploymentButtons: this.props.caseButtons.filter((value, index) => { return (value.caseDefinitionType === 2 && !value.isPreProcessUrl); })
+                        editEmploymentButtons: this.props.caseButtons.filter((value, index) => {
+                            return value.caseDefinitionType === 2 && !value.isPreProcessUrl;
+                        })
                     });
                 } else {
                     this.setState({
-                        functionalButtons: this.props.caseButtons.filter((value, index) => { return (value.caseDefinitionType !== 1 && value.caseDefinitionType !== 2); })
+                        functionalButtons: this.props.caseButtons.filter((value, index) => {
+                            return value.caseDefinitionType === 0 && value.isPreProcessUrl;
+                        })
                     });
                 }
             });
@@ -76,78 +77,144 @@ class EmploymentCardCaseButtons extends React.Component {
     }
 
     sortCaseButtons(caseButtons) {
-        return caseButtons.sort(function (firstElement, secondElement) {
-                var descriptionOne = firstElement.description.toUpperCase();
-                var descriptionTwo = secondElement.description.toUpperCase();
+        return caseButtons.sort(function(firstElement, secondElement) {
+            var descriptionOne = firstElement.description.toUpperCase();
+            var descriptionTwo = secondElement.description.toUpperCase();
 
-                if (descriptionOne < descriptionTwo) {
-                        return -1;
-                    }
+            if (descriptionOne < descriptionTwo) {
+                return -1;
+            }
 
-                if (descriptionOne > descriptionTwo) {
-                        return 1;
-                    }
+            if (descriptionOne > descriptionTwo) {
+                return 1;
+            }
 
-                return 0;
-        })
+            return 0;
+        });
     }
 
     render() {
-        console.log(this.state.editEmploymentButtons);
-        console.log(this.state.newEmploymentButtons);
-        console.log(this.sortCaseButtons(this.state.newEmploymentButtons));
+        const { p } = this.props;
         return (
-            <div>
-                <div className="casebuttons-sec-title">Nytt ärende för {this.props.employeeName}</div>
-                <h5>Ändra anställning</h5>
-                <div className="case-buttons casemenu">
-                {(this.state.editEmploymentButtons.length !== 0) ?
-                    caseTypes.caseButtonColumns.map((caseButtonColumnValue, caseButtonColumnIndex) => {
-                        return this.processCaseButtons(this.state.editEmploymentButtons).map((editEmploymentCaseButtons, processedCaseButtonIndex) => {
-                            if (caseButtonColumnIndex === processedCaseButtonIndex) {
-                                return <div className={`${caseButtonColumnValue.columnClass} column-dialog`} key={caseButtonColumnIndex}>
-                                            {
-                                                editEmploymentCaseButtons.map((caseButtons, caseButtonsIndex) => {
-                                                    return <a className="button casemenu-button create-case button-card-view" href={`${caseButtons.url}/${this.props.employmentId}?caseDefinitionId=${caseButtons.id}`} key={caseButtonsIndex} data-select-casegroup-url={`/Employment/Employment/GetEmploymentGroups/${this.props.employmentId}?caseType=${this.getCaseType(caseButtons.caseType)}`} >
-                                                                <span className="casebutton-text">
-                                                                    <i className="fa fa-briefcase"></i>
-                                                                    &nbsp;{caseButtons.description}
-                                                                </span>
-                                                            </a>;
-                                                })
-                                            }
-                                </div>;
-                            }
-                        })
-                    })
-                    :
-                    null
-                }
+            <div className="createcase-dialog">
+                {this.state.editEmploymentButtons.length !== 0 ? (
+                    <h5>{p.t("employment_employmentcard_changeemployment")}</h5>
+                ) : null}
+                <div className="case-buttons casemenu row">
+                    {this.state.editEmploymentButtons.length !== 0
+                        ? caseTypes.caseButtonColumns.map((caseButtonColumnValue, caseButtonColumnIndex) => {
+                              return this.processCaseButtons(this.state.editEmploymentButtons).map(
+                                  (editEmploymentCaseButtons, processedCaseButtonIndex) => {
+                                      if (caseButtonColumnIndex === processedCaseButtonIndex) {
+                                          return (
+                                              <div
+                                                  className={`${caseButtonColumnValue.columnClass} column-dialog col-md-12 col-lg-4`}
+                                                  key={caseButtonColumnIndex}
+                                              >
+                                                  {editEmploymentCaseButtons.map((caseButtons, caseButtonsIndex) => {
+                                                      return (
+                                                          <a
+                                                              className="button casemenu-button create-case button-card-view"
+                                                              href={`${caseButtons.url}/${this.props.employmentId}?caseDefinitionId=${caseButtons.id}`}
+                                                              key={caseButtonsIndex}
+                                                              data-select-casegroup-url={`/Employment/Employment/GetEmploymentGroups/${
+                                                                  this.props.employmentId
+                                                              }?caseType=${this.getCaseType(caseButtons.caseType)}`}
+                                                          >
+                                                              <span className="casebutton-text">
+                                                                  <i className="fa fa-briefcase"></i>
+                                                                  &nbsp;{caseButtons.description}
+                                                              </span>
+                                                          </a>
+                                                      );
+                                                  })}
+                                              </div>
+                                          );
+                                      }
+                                  }
+                              );
+                          })
+                        : null}
                 </div>
-                <h5>Ny anställning</h5>
-                <div className="case-buttons casemenu">
-                {(this.state.newEmploymentButtons.length !== 0) ? 
-                    caseTypes.caseButtonColumns.map((caseButtonColumnValue, caseButtonColumnIndex) => {
-                        return this.processCaseButtons(this.state.newEmploymentButtons).map((newEmploymentCaseButtons, processedCaseButtonIndex) => {
-                            if (caseButtonColumnIndex === processedCaseButtonIndex) {
-                                return <div className={`${caseButtonColumnValue.columnClass} column-dialog`} key={caseButtonColumnIndex}>
-                                    {
-                                        newEmploymentCaseButtons.map((caseButtons, caseButtonsIndex) => {
-                                            return <a className="button casemenu-button create-case button-card-view" href={`${caseButtons.url}/${this.props.employmentId}?caseDefinitionId=${caseButtons.id}`} key={caseButtonsIndex} data-lightbox data-lightboxwidth="910px" data-createnewemployment="" >
-                                                        <span className="casebutton-text">
-                                                            <i className="fa fa-briefcase"></i>
-                                                            &nbsp;{caseButtons.description}
-                                                        </span>
-                                                   </a>;
-                                        })
-                                    }
-                                </div>;
-                            }
-                        })
-                    })
-                    :
-                    null
-                }
+                {this.state.newEmploymentButtons.length !== 0 ? <h5>{p.t("employment_employmentcard_newemployment")}</h5> : null}
+                <div className="case-buttons casemenu row">
+                    {this.state.newEmploymentButtons.length !== 0
+                        ? caseTypes.caseButtonColumns.map((caseButtonColumnValue, caseButtonColumnIndex) => {
+                              return this.processCaseButtons(this.state.newEmploymentButtons).map(
+                                  (newEmploymentCaseButtons, processedCaseButtonIndex) => {
+                                      if (caseButtonColumnIndex === processedCaseButtonIndex) {
+                                          return (
+                                              <div
+                                                  className={`${caseButtonColumnValue.columnClass} column-dialog col-md-12 col-lg-4`}
+                                                  key={caseButtonColumnIndex}
+                                              >
+                                                  {newEmploymentCaseButtons.map((caseButtons, caseButtonsIndex) => {
+                                                      return (
+                                                          <a
+                                                              className="button casemenu-button create-case button-card-view"
+                                                              href={`${caseButtons.url}/${this.props.employmentId}?caseDefinitionId=${caseButtons.id}`}
+                                                              onClick={e =>
+                                                                  this.props.closeCaseButtonsPopup(this.props.employmentId, e)
+                                                              }
+                                                              key={caseButtonsIndex}
+                                                              data-lightbox
+                                                              data-lightboxwidth="910px"
+                                                              data-createnewemployment=""
+                                                          >
+                                                              <span className="casebutton-text">
+                                                                  <i className="fa fa-briefcase"></i>
+                                                                  &nbsp;{caseButtons.description}
+                                                              </span>
+                                                          </a>
+                                                      );
+                                                  })}
+                                              </div>
+                                          );
+                                      }
+                                  }
+                              );
+                          })
+                        : null}
+                </div>
+                {this.state.functionalButtons.length !== 0 ? <h5>{p.t("employment_employmentcard_functionalbuttons")}</h5> : null}
+                <div className="case-buttons casemenu row">
+                    {this.state.functionalButtons.length !== 0
+                        ? caseTypes.caseButtonColumns.map((caseButtonColumnValue, caseButtonColumnIndex) => {
+                              return this.processCaseButtons(this.state.functionalButtons).map(
+                                  (functionalCaseButtons, processedCaseButtonIndex) => {
+                                      if (caseButtonColumnIndex === processedCaseButtonIndex) {
+                                          return (
+                                              <div
+                                                  className={`${caseButtonColumnValue.columnClass} column-dialog col-md-12 col-lg-4`}
+                                                  key={caseButtonColumnIndex}
+                                              >
+                                                  {functionalCaseButtons.map((caseButtons, caseButtonsIndex) => {
+                                                      return (
+                                                          <a
+                                                              className="button casemenu-button create-case button-card-view"
+                                                              href={`${caseButtons.url}/${this.props.employmentId}?caseDefinitionId=${caseButtons.id}`}
+                                                              onClick={e =>
+                                                                  this.props.closeCaseButtonsPopup(this.props.employmentId, e)
+                                                              }
+                                                              key={caseButtonsIndex}
+                                                              data-lightbox
+                                                              data-lightboxwidth="910px"
+                                                              data-createnewemployment=""
+                                                          >
+                                                              <span className="casebutton-text">
+                                                                  <i className="fa fa-briefcase"></i>
+                                                                  &nbsp;{caseButtons.description}
+                                                              </span>
+                                                          </a>
+                                                      );
+                                                  })}
+                                              </div>
+                                          );
+                                      }
+                                  }
+                              );
+                          })
+                        : null}
                 </div>
             </div>
         );

@@ -1,51 +1,139 @@
-.employment-main {
-    margin: 1.5em 0;
-    background-color: #ffffff;
-    box-shadow: 0 0 0.5em #d7d7d7;
+@import "./../../core/_colors.scss";
+@import "./../../core/_settings.scss";
 
-    .employment-body {
-        width: 100%;
-        min-height: 100px;
-        display: grid;
-        display: -ms-grid;
-        grid-template-columns: 15% 25% 25% 25% 10%;
-        -ms-grid-columns: 15% 25% 25% 25% 10%;
-        grid-template-rows: auto;
-        -ms-grid-rows: auto;
-        overflow-wrap: break-word;
+.employment-card-view {
+    margin-bottom: 1rem;
 
-        .employee-image {
-            grid-column: 1/2;
-            -ms-grid-column: 1;
-            margin: 1em auto;
-            text-align: center;
+    .form-group {
+        height: 60px;
+        padding: 0 15px 0 15px;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 998;
+        background-color: $color-gallery1;
 
-            img.employee-base-image {
-                width: 70px;
-                height: 70px;
-            }
+        .search-icon {
+            top: 15.5px;
+            left: 15px;
+        }
 
-            .employee-image-icon {
-                line-height: 70px;
-                font-size: 4.5em;
-                width: 70px;
-                height: 70px;
-                border-radius: 50%;
-                background-color: #d7d7d7;
-                color: white;
+        .fa-times {
+            position: relative;
+            right: 25px;
+            height: 20px;
+            width: 20px;
+            color: rgba(0, 0, 0, 0.5);
+
+            &:hover {
+                cursor: pointer;
             }
         }
 
-        .employee-name-and-designation {
-            grid-column: 2/3;
-            -ms-grid-column: 2;
-            margin: 1em;
+        .fa-times::before {
+            position: relative;
+            top: 4px;
+            left: 5px;
+        }
+
+        input.form-control {
+            width: 280px;
+            height: 30px;
+        }
+
+        .clear-search {
+            display: none !important;
+        }
+
+        .push {
+            margin-left: auto;
+
+            span {
+                margin-left: 5px;
+                position: relative;
+                top: 3px;
+            }
+        }
+    }
+
+    .col-lg-12 {
+        padding: 0px;
+    }
+
+    .employment-main {
+        border: 1px solid $color-alto1;
+        margin-bottom: 20px;
+
+        &:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.349019);
+        }
+
+        .employment-body {
+            padding: 0rem;
+            background-color: $color-white;
+            min-height: 37px;
+            word-wrap: break-word;
+            margin: 0 auto;
+            position: relative;
+            cursor: pointer;
+
+            .employee-casecard-left {
+                min-height: 138px;
+                background-color: $color-deep-cerulean;
+                position: relative;
+                width: 30px;
+
+                span.employee-casecard-left-icon {
+                    cursor: pointer;
+                    position: relative;
+                    left: 8px;
+                    display: inline-block;
+                    padding-top: 15px;
+                    color: $color-white;
+                    font-size: 15px;
+                    cursor: default;
+                }
+            }
+
+            .employee-image {
+                min-height: 109px;
+                margin: 1em auto;
+                text-align: center;
+                padding-right: 10px;
+
+                img.employee-base-image {
+                    width: 70px;
+                    height: 70px;
+                    margin: 1.7em auto;
+                }
+
+                .employee-image-icon {
+                    margin: 0.4em auto;
+                    line-height: 70px;
+                    font-size: 4.5em;
+                    width: 70px;
+                    height: 70px;
+                    border-radius: 50%;
+                    background-color: $color-alto1;
+                    color: $color-white;
+                }
+            }
 
             .employee-name {
-                display: block;
+                margin: 4em 0;
+                min-height: 37px;
+                position: relative;
+                overflow-wrap: break-word;
 
-                a {
-                    font-size: 1.3em;
+                .employee-details {
+                    padding-left: 10px;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    font-size: 1.2em;
                     font-weight: bold;
                     color: #0974b3;
                     text-decoration: none;
@@ -53,185 +141,520 @@
                 }
             }
 
-            .employee-designation {
-                display: block;
-                font-size: 1.2em;
+            .employee-number-designation {
+                margin: 3.5em 0;
+                min-height: 49px;
+                position: relative;
+
+                .employment-number {
+                    position: absolute;
+                    top: 15%;
+                    transform: translateY(-50%);
+                    font-size: 1em;
+                    font-weight: 600;
+                }
+
+                .employee-designation {
+                    position: absolute;
+                    top: 85%;
+                    transform: translateY(-50%);
+                    font-size: 1em;
+                    font-weight: 600;
+                }
             }
-        }
 
-        .employee-email {
-            grid-column: 3/4;
-            -ms-grid-column: 3;
-            margin: auto 1.1em;
-            font-size: 1.2em;
-            font-weight: 700;
+            .employee-email {
+                margin: 3em auto;
+                font-size: 1em;
+                font-weight: 600;
+                min-height: 65px;
+                position: relative;
+                left: 40px;
 
-            > i {
+                > i {
+                    font-size: 30px;
+                    position: relative;
+                    top: 14px;
+                }
+
+                span:nth-of-type(odd) {
+                    position: absolute;
+                    top: 29%;
+                    left: 14%;
+                    transform: translateY(-50%);
+                    display: block;
+                }
+
+                span:nth-of-type(even) {
+                    width: 200px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    position: absolute;
+                    top: 62%;
+                    left: 14%;
+                    transform: translateY(-50%);
+                    display: inline-block;
+                }
+            }
+
+            .employee-phone {
+                margin: 3em auto;
+                font-size: 1em;
+                font-weight: 600;
+                min-height: 65px;
+                position: relative;
+
+                > i {
+                    position: relative;
+                    top: 14px;
+                    font-size: 30px;
+                    padding-left: 15px;
+                }
+
+                > span:nth-of-type(odd) {
+                    position: absolute;
+                    top: 29%;
+                    left: 26%;
+                    transform: translateY(-50%);
+                    display: block;
+                }
+
+                > span:nth-of-type(even) {
+                    position: absolute;
+                    top: 62%;
+                    left: 26%;
+                    transform: translateY(-50%);
+                    display: block;
+                }
+            }
+
+            .employee-action {
                 font-size: 20px;
-            }
-        }
+                color: $blue-color;
+                padding: 10px !important;
+                position: relative;
+                top: 43px;
+                left: 10px;
 
-        .employee-phone {
-            grid-column: 4/5;
-            -ms-grid-column: 4;
-            margin: auto 1.1em;
-            font-size: 1.2em;
-            font-weight: 700;
-
-            > i {
-                font-size: 20px;
-            }
-        }
-
-        .employee-action {
-            grid-column: 5/6;
-            -ms-grid-column: 5;
-            margin: auto;
-            font-size: 18px;
-            color: #0974b3;
-        }
-
-        .employee-action:hover {
-            cursor: pointer;
-        }
-
-        @media only screen and (max-width: 750px) {
-            /* For mobile phones: */
-            [class*="employee-"] {
-                grid-column: 1/2;
-                -ms-grid-column: 1;
-                margin-top: 1.2%;
-                text-align: center;
-            }
-        }
-    }
-
-    .employment-expanded {
-        width: 100%;
-        min-height: 300px;
-        display: grid;
-        display: -ms-grid;
-        grid-template-columns: 70% 30%;
-        -ms-grid-columns: 70% 30%;
-        grid-template-rows: auto;
-        -ms-grid-rows: auto;
-        border-top: 1px solid #d7d7d7;
-
-        .employment-expanded-left {
-            grid-column: 1/2;
-            -ms-grid-column: 1;
-            border-right: 1px solid #d7d7d7;
-            padding: 3%;
-
-            .casebuttons-sec-title {
-                width: 95%;
-                font-size: 1.857em;
-                border-bottom: 1px solid #bdbdbd;
-            }
-
-            .case-buttons {
-                width: 100%;
-                display: grid;
-                display: -ms-grid;
-                grid-template-columns: 33% 33% 33%;
-                -ms-grid-columns: 33% 33% 33%;
-                grid-template-rows: auto;
-                -ms-grid-rows: auto;
-
-                .left-column {
-                    grid-column: 1/2;
-                    -ms-grid-column: 1;
+                &:hover {
+                    background-color: #0974b3;
+                    color: #ffffff;
+                    cursor: pointer;
                 }
 
-                .middle-column {
-                    grid-column: 2/3;
-                    -ms-grid-column: 2;
+                > span {
+                    position: relative;
+                    left: 7px;
                 }
 
-                .right-column {
-                    grid-column: 3/4;
-                    -ms-grid-column: 3;
-                }
+                #popover-contained {
+                    left: -1966% !important;
 
-                .button-card-view {
-                    width: 95%;
-                }
-
-                @media only screen and (max-width: 1310px) {
-                    /* For mobile phones: */
-                    [class*="-column"] {
-                        grid-column: 1/4;
+                    .popover-title {
+                        color: #000;
                     }
+                }
 
-                    .button-card-view {
-                        width: 65%;
+                .datatable-toolbar-container {
+                    &:hover {
+                        background-color: $blue-color;
                     }
                 }
             }
-        }
 
-        .employment-expanded-right {
-            grid-column: 2/3;
-            -ms-grid-column: 2;
-            padding-left: 5%;
-
-            .employment-card-sec-title {
-                width: 95%;
-                margin-top: 8%;
-                font-size: 1.857em;
-                border-bottom: 1px solid #bdbdbd;
-            }
-
-            @media only screen and (max-width: 750px) {
-                /* For mobile phones: */
-                .employment-card-sec-title {
-                    margin-top: 0;
+            @media only screen and (max-width: 992px) {
+                /* For mobile devices: */
+                [class*="employee-"] {
+                    text-align: center;
                 }
             }
-        }
-
-        @media only screen and (max-width: 750px) {
-            /* For mobile phones: */
-            [class*="employment-expanded-"] {
-                grid-column: 1/2;
-                -ms-grid-column: 1;
-            }
-        }
-    }
-
-    @media only screen and (max-width: 750px) {
-        /* For mobile phones: */
-        .employment-body {
-            width: 100%;
-            min-height: 100px;
-            display: grid;
-            display: -ms-grid;
-            grid-template-columns: 100%;
-            -ms-grid-columns: 100%;
-            grid-template-rows: auto;
-            -ms-grid-rows: auto;
         }
 
         .employment-expanded {
-            width: 100%;
-            min-height: 300px;
-            display: grid;
-            display: -ms-grid;
-            grid-template-columns: 100%;
-            -ms-grid-columns: 100%;
-            grid-template-rows: auto;
-            -ms-grid-rows: auto;
+            min-height: 380px;
+            background-color: $color-white;
+            border-top: 1px solid $color-alto1;
+
+            .employee-name-person-number {
+                padding-top: 15px;
+                padding-left: 15px;
+                font-size: 1.3em;
+                font-weight: bold;
+                color: #0974b3;
+                margin: 1em 2em;
+            }
+
+            .employment-expanded-left {
+                min-height: 360px;
+                border-right: 1px solid $color-alto1;
+                margin-bottom: 1em;
+
+                .table {
+                    border-collapse: separate;
+                    border-spacing: 1em;
+
+                    > tbody > tr > td {
+                        border: none;
+                    }
+                }
+            }
+
+            .employment-expanded-middle {
+                min-height: 360px;
+                border-right: 1px solid $color-alto1;
+                margin-bottom: 1em;
+
+                .table {
+                    border-collapse: separate;
+                    border-spacing: 1em;
+
+                    > tbody > tr > td {
+                        border: none;
+                    }
+                }
+            }
+
+            .employment-expanded-right {
+                min-height: 360px;
+                margin-bottom: 1em;
+
+                .table {
+                    border-collapse: separate;
+                    border-spacing: 1em;
+
+                    > tbody > tr > td {
+                        border: none;
+                    }
+                }
+            }
+        }
+
+        @media only screen and (max-width: 992px) {
+            /* For mobile devices: */
+            .employment-expanded-right {
+                margin-left: 1.5%;
+            }
+        }
+
+        .popover {
+            min-width: 450px;
+            max-width: 1100px;
+
+            > .arrow,
+            .arrow:after {
+                border: none;
+                border-style: none;
+            }
+
+            .popover-title {
+                .closing-icon {
+                    float: right;
+                }
+            }
+
+            .popover-content {
+                .casebuttons-sec-title {
+                    font-size: 1.857em;
+                    border-bottom: 1px solid #bdbdbd;
+                }
+
+                .createcase-dialog {
+                    h5 {
+                        color: #000;
+                    }
+                }
+
+                .column-dialog {
+                    padding-left: 0.5% !important;
+                    padding-right: 0.5% !important;
+
+                    .button-card-view {
+                        width: 90%;
+                    }
+                }
+
+                @media only screen and (max-width: 992px) {
+                    /* For mobile devices: */
+                    .createcase-dialog {
+                        min-width: 100%;
+
+                        .column-dialog {
+                            width: 100%;
+
+                            .button-card-view {
+                                width: 90%;
+                            }
+                        }
+                    }
+                }
+
+                @media only screen and (max-width: 1200px) {
+                    /* For mobile devices: */
+                    .createcase-dialog {
+                        .button-card-view {
+                            width: 60%;
+                        }
+                    }
+                }
+            }
         }
     }
-}
 
-.list-component-container {
-    margin: 1.5em 0;
-    background-color: #ffffff;
-}
+    .go-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgb(0, 0, 0);
+        background: rgba(0, 0, 0, 0.7);
+        width: 50px;
+        height: 50px;
+        display: block;
+        text-decoration: none;
+        -webkit-border-radius: 35px;
+        -moz-border-radius: 35px;
+        border-radius: 35px;
+        display: none;
+        -webkit-transition: all 0.3s linear;
+        -moz-transition: all 0.3s ease;
+        -ms-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
 
-.employment-card-container {/*
-    margin-top: 2em;
-    margin-bottom: 2em;
-    */
+        &.show {
+            transition: opacity 400ms;
+        }
+
+        &.hide {
+            opacity: 0;
+        }
+    }
+
+    .go-to-top i {
+        color: #fff;
+        margin: 0;
+        position: relative;
+        left: 16px;
+        top: 13px;
+        font-size: 19px;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -ms-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+
+    .go-to-top:hover {
+        background: rgba(0, 0, 0, 0.9);
+    }
+
+    .go-to-top:hover i {
+        color: #fff;
+        top: 5px;
+    }
+
+    .react-toggle {
+        touch-action: pan-x;
+
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        background-color: transparent;
+        border: 0;
+        padding: 0;
+        top: 1.5px;
+
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .react-toggle-screenreader-only {
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    .react-toggle--disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+        -webkit-transition: opacity 0.25s;
+        transition: opacity 0.25s;
+    }
+
+    .react-toggle-track {
+        width: 50px;
+        height: 24px;
+        padding: 0;
+        border-radius: 30px;
+        background-color: #4d4d4d;
+        -webkit-transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+    }
+
+    .react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
+        background-color: #000000;
+    }
+
+    .react-toggle--checked .react-toggle-track {
+        background-color: #19ab27;
+    }
+
+    .react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+        background-color: #128d15;
+    }
+
+    .react-toggle-track-check {
+        position: absolute;
+        width: 14px;
+        height: 10px;
+        top: 0px;
+        bottom: 0px;
+        margin-top: auto;
+        margin-bottom: auto;
+        line-height: 0;
+        left: 8px;
+        opacity: 0;
+        -webkit-transition: opacity 0.25s ease;
+        -moz-transition: opacity 0.25s ease;
+        transition: opacity 0.25s ease;
+    }
+
+    .react-toggle--checked .react-toggle-track-check {
+        opacity: 1;
+        -webkit-transition: opacity 0.25s ease;
+        -moz-transition: opacity 0.25s ease;
+        transition: opacity 0.25s ease;
+    }
+
+    .react-toggle-track-x {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 0px;
+        bottom: 0px;
+        margin-top: auto;
+        margin-bottom: auto;
+        line-height: 0;
+        right: 10px;
+        opacity: 1;
+        -webkit-transition: opacity 0.25s ease;
+        -moz-transition: opacity 0.25s ease;
+        transition: opacity 0.25s ease;
+    }
+
+    .react-toggle--checked .react-toggle-track-x {
+        opacity: 0;
+    }
+
+    .react-toggle-thumb {
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        width: 22px;
+        height: 22px;
+        border: 1px solid #4d4d4d;
+        border-radius: 50%;
+        background-color: #fafafa;
+
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+
+        -webkit-transition: all 0.25s ease;
+        -moz-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+    }
+
+    .react-toggle--checked .react-toggle-thumb {
+        left: 27px;
+        border-color: #19ab27;
+    }
+
+    .react-toggle--focus .react-toggle-thumb {
+        -webkit-box-shadow: 0px 0px 3px 2px #0099e0;
+        -moz-box-shadow: 0px 0px 3px 2px #0099e0;
+        box-shadow: 0px 0px 2px 3px #0099e0;
+    }
+
+    .react-toggle:active:not(.react-toggle--disabled) .react-toggle-thumb {
+        -webkit-box-shadow: 0px 0px 5px 5px #0099e0;
+        -moz-box-shadow: 0px 0px 5px 5px #0099e0;
+        box-shadow: 0px 0px 5px 5px #0099e0;
+    }
+
+    .react-toggle-wrapper {
+        padding: 0;
+        line-height: 15px;
+
+        label:hover :not(.react-toggle--disabled) .react-toggle-track,
+        .react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
+            background-color: $disabled-color;
+        }
+
+        .react-toggle--disabled {
+            cursor: default;
+        }
+
+        .react-toggle--checked {
+            .react-toggle-track {
+                background-color: $color-limeade1;
+            }
+            .react-toggle-thumb {
+                border-color: $color-limeade1;
+                left: 19px;
+            }
+        }
+
+        .react-toggle,
+        .label-text {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .react-toggle {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 2px 0;
+        }
+
+        .label-text {
+            padding-left: 10px;
+            max-width: 100px;
+        }
+
+        .react-toggle-track {
+            background-color: #c1c1c1;
+            width: 38px;
+            height: 20px;
+            transition: all 0.05s;
+        }
+
+        .react-toggle-thumb {
+            border-color: #c1c1c1;
+            width: 18px;
+            height: 18px;
+            transition: all 0.05s;
+        }
+
+        &.compact {
+            width: 140px;
+            .label-text {
+                max-width: 100px;
+            }
+        }
+    }
 }

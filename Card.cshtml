@@ -4,11 +4,13 @@
 @{
     Layout = "~/Views/NextGen/Shared/_ReactLayout.cshtml";
 
-    ViewBag.Title = Html.GetTranslation(LocalizationKeys.Common.Menu.Employment);
+    ViewBag.Title = ViewBag.MyEmployments != true ?
+                        Html.GetTranslation(LocalizationKeys.Common.Menu.EmploymentFiles) :
+                        Html.GetTranslation(LocalizationKeys.Common.Menu.MyEmploymentFiles);
 
     ViewBag.UseNordicCool = true;
 
-    ViewBag.ReactHookId = "employment-card";
+    ViewBag.ReactHookId = "employment-card-view";
 
     ViewBag.HelpModel = new IButtonPopupModel
     {
@@ -25,33 +27,14 @@
         </div>
         <div>
             @Html.Action("GetCreateCaseButtons", "Employment", new { area = "Employment", hide = false })
-            <div class="button-group pull-right left-margin">
-                <a class="button toggle-view is-primary" onClick="setCardView(false)">
-                    <i class="fa fa-list" aria-hidden="true"></i> Lista
-                </a>
-                <a class="button toggle-view is-primary is-active">
-                    <i class="fa fa-th" aria-hidden="true"></i> Kort
-                </a>
-            </div>
         </div>
     </div>
-
-    <script>
-        function setCardView(cardViewValue) {
-            if (cardViewValue != true) {
-                document.cookie = "showCardView=" + cardViewValue + ";expires=01 Jan 2030 00:00:00";
-                var redirectLocation = window.location.href.split("?")[0];
-                window.location.href = redirectLocation;
-            }
-        }
-        $("#employment-card").appendTo(".content");
-    </script>
 }
 
 @section head
 {
     @Styles.Render("~/bundles/employment/list/css")
-    @Styles.Render("~/Content/css/select2.css")
+    @Styles.Render("~/bundles/NextGen/css")
 }
 
 @section scripts
